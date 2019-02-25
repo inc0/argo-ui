@@ -4,6 +4,7 @@ import * as React from 'react';
 import { Link } from 'react-router-dom';
 
 import { Checkbox } from '../checkbox';
+import { TextSearch } from '../textsearch';
 import { DropDownMenu } from '../dropdown-menu';
 import { DropDown } from '../dropdown/dropdown';
 
@@ -36,11 +37,11 @@ export interface TopBarProps extends React.Props<any> {
     toolbar?: Toolbar;
 }
 
-const renderFilter = (filter: TopBarFilter<any>) => (
+const renderFilterPhase = (filter: TopBarFilter<any>) => (
     <DropDown isMenu={true}
             anchor={() => (
                 <div className={classNames('top-bar__filter', { 'top-bar__filter--selected': filter.selectedValues.length > 0 })}>
-                    <i className='argo-icon-filter' aria-hidden='true'/>
+                    <i aria-hidden='true'>Phase</i>
                     <i className='fa fa-angle-down' aria-hidden='true'/>
                 </div>)}>
         <ul>
@@ -64,6 +65,21 @@ const renderFilter = (filter: TopBarFilter<any>) => (
             </li>
         ))}
         </ul>
+    </DropDown>
+);
+
+const renderFilterLabel = (filter: TopBarFilter<any>) => (
+    <DropDown isMenu={true}
+            anchor={() => (
+                <div className={classNames('top-bar__filter', { 'top-bar__filter--selected': filter.selectedValues.length > 0 })}>
+                    <i aria-hidden='true'>Label</i>
+                    <i className='fa fa-angle-down' aria-hidden='true'/>
+                </div>)}>
+        <React.Fragment>
+            <TextSearch id="foo" onChange={(value) => {
+                
+            }} />
+        </React.Fragment>
     </DropDown>
 );
 
@@ -103,7 +119,8 @@ const renderToolbar = (toolbar: Toolbar) => (
             {toolbar.actionMenu && renderActionMenu(toolbar.actionMenu)}
             <div className='top-bar__right-side '>
                 {toolbar.tools}
-                {toolbar.filter && renderFilter(toolbar.filter)}
+                {toolbar.filter && renderFilterPhase(toolbar.filter)}
+                {toolbar.filter && renderFilterLabel(toolbar.filter)}
             </div>
         </div>
     </div>
